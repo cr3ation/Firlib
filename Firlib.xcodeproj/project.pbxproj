@@ -11,6 +11,7 @@
 		BEA20C181F92B13F00DAC9DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA20C171F92B13F00DAC9DF /* ViewController.swift */; };
 		BEA20C1A1F92B13F00DAC9DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA20C191F92B13F00DAC9DF /* Assets.xcassets */; };
 		BEA20C1D1F92B13F00DAC9DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEA20C1B1F92B13F00DAC9DF /* Main.storyboard */; };
+		BEA20C261F92B34400DAC9DF /* PickManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA20C251F92B34400DAC9DF /* PickManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		BEA20C1C1F92B13F00DAC9DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BEA20C1E1F92B13F00DAC9DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEA20C1F1F92B13F00DAC9DF /* Firlib.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Firlib.entitlements; sourceTree = "<group>"; };
+		BEA20C251F92B34400DAC9DF /* PickManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				BEA20C1B1F92B13F00DAC9DF /* Main.storyboard */,
 				BEA20C1E1F92B13F00DAC9DF /* Info.plist */,
 				BEA20C1F1F92B13F00DAC9DF /* Firlib.entitlements */,
+				BEA20C251F92B34400DAC9DF /* PickManager.swift */,
 			);
 			path = Firlib;
 			sourceTree = "<group>";
@@ -95,6 +98,11 @@
 					BEA20C111F92B13F00DAC9DF = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -133,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEA20C261F92B34400DAC9DF /* PickManager.swift in Sources */,
 				BEA20C181F92B13F00DAC9DF /* ViewController.swift in Sources */,
 				BEA20C161F92B13F00DAC9DF /* AppDelegate.swift in Sources */,
 			);
@@ -262,7 +271,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Firlib/Firlib.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = CS6XL73P93;
@@ -278,7 +286,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Firlib/Firlib.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = CS6XL73P93;
