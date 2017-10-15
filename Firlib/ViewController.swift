@@ -11,36 +11,73 @@ class ViewController: NSViewController {
     let irlibPath: String = "/Users/henrikengstrom/PycharmProjects/irlib_demo"
     let statusAvailable = NSImage(named: NSImage.Name(rawValue: "NSStatusAvailable"))
     let statusNone = NSImage(named: NSImage.Name(rawValue: "NSStatusNone"))
+    let statusPartiallyAvailable = NSImage(named: NSImage.Name(rawValue: "NSStatusPartiallyAvailable"))
     
+    var timer = Timer()
     
-    var pickManagers: [PickManager] = []
+    // Working on
+    var workingOnUtmFile = false
+    var workingOnChaces = false
+    
+    //var pickManagers: [PickManager] = []
     var selectedIndex = 0
     
     @IBOutlet weak var h5FileSelector: NSPopUpButton!
+    @IBOutlet weak var dumpMetaButton: NSButton!
     @IBOutlet weak var utmCoordinatesButton: NSButton!
     @IBOutlet weak var cachesButton: NSButton!
+    @IBOutlet weak var pickedButton: NSButton!
+    @IBOutlet weak var ratedButton: NSButton!
+    @IBOutlet weak var offsetsButton: NSButton!
+    
+    @IBOutlet weak var cachesLabel: NSTextField!
+    
+    @IBOutlet weak var pickedLabel: NSTextField!
+    
+    @IBOutlet weak var ratedLabel: NSTextField!
     
     // When a new file is selected in drop down
     @IBAction func newFileSelected(_ sender: Any) {
-        selectedIndex = h5FileSelector.indexOfSelectedItem
+        updateGuiComponents()
     }
 
+    @IBAction func refreshButtonClicked(_ sender: Any) {
+        updateGuiComponents()
+    }
+    
+    
+    @IBAction func dumpMetaButtonClicked(_ sender: Any) {
+        dumpMetaButton.isEnabled = false;
+        getCurretPickManager().generateMetadata()
+    }
+    
     @IBAction func utmCoordinatesButtonClicked(_ sender: Any) {
         utmCoordinatesButton.isEnabled = false
-        pickManagers[selectedIndex].generateUtmFile()
-        updateGuiComponents()
+        utmCoordinatesButton.image = statusPartiallyAvailable
+        workingOnUtmFile = true
+        getCurretPickManager().generateUtmFile()
     }
     
     @IBAction func cachesButtonClicked(_ sender: Any) {
-        let pickManager = pickManagers[selectedIndex]
         cachesButton.isEnabled = false
-        pickManager.generateCaches()
-        updateGuiComponents()
+        cachesButton.image = statusPartiallyAvailable
+        workingOnChaces = true
+        getCurretPickManager().generateCaches()
+    }
+ 
+    @IBAction func pickedButtonClicked(_ sender: Any) {
+        getCurretPickManager().openIcepick2()
     }
     
-    
-    
-    
+    @IBAction func ratedButtonClicked(_ sender: Any) {
+        getCurretPickManager().openIcerate()
+    }
+
+    @IBAction func offsetsButtonClicked(_ sender: Any) {
+        getCurretPickManager().generateOffsets()
+        updateGuiComponents(delay: 5)
+    }
+
     
     
     override func viewDidLoad() {
@@ -56,19 +93,26 @@ class ViewController: NSViewController {
         }
     }
     
+    // Returns the selected pickManager
+    func getCurretPickManager() -> PickManager {
+        let file = h5FileSelector.titleOfSelectedItem
+        let h5FileUrl = URL(fileURLWithPath: irlibPath).appendingPathComponent("data").appendingPathComponent(file!)
+        let pickManager = PickManager(h5FileUrl: h5FileUrl, irlibUrl: URL(fileURLWithPath: irlibPath))
+        return pickManager
+    }
+    
     // Initial setup
     func initialSetup(){
-        let irlibUrl = URL(fileURLWithPath: self.irlibPath)
         let h5FilesUrl = getH5Files()
         h5FileSelector.removeAllItems()
         
         for h5FileUrl in h5FilesUrl{
             let fileName = h5FileUrl.pathComponents.last
             h5FileSelector.addItem(withTitle: fileName!)
-            let pickManager = PickManager(h5FileUrl: h5FileUrl, irlibUrl: irlibUrl)
-            self.pickManagers.append(pickManager)
         }
+        //Start timer
         updateGuiComponents()
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateGuiNow), userInfo: nil, repeats: true)
     }
 
     // Get all h5 files in folder (not _utm.h5)
@@ -86,9 +130,7 @@ class ViewController: NSViewController {
             // Files ending on h5 but not _utm.h5
             if fileUrl.pathExtension == "h5" &&
                 pathComponents[pathComponents.count - 1].lowercased().range(of:"_utm.h5") == nil {
-                
                 h5Files.append(fileUrl)
-                print(pathComponents[pathComponents.count - 1])
             }
         }
         return h5Files
@@ -107,43 +149,146 @@ class ViewController: NSViewController {
         }
     }
     
+    // Only used by timer
+    @objc func updateGuiNow() {
+        updateGuiComponents(delay: 0)
+    }
+    
     // Validate GUI
-    func updateGuiComponents()
+    func updateGuiComponents(delay: Int = 0)
     {
-        let pickManager = pickManagers[selectedIndex]
-        
-        // Utm coordinates
-        if pickManager.utmFileExists {
-            utmCoordinatesButton.isEnabled = false
-            utmCoordinatesButton.image = statusAvailable
-        }
-        else {
-            utmCoordinatesButton.isEnabled = true
-            utmCoordinatesButton.image = statusNone
-        }
-        
-        // Caches
-        if pickManager.utmFileExists {
-            if pickManager.cacheFilesExist {
-                cachesButton.isEnabled = false
-                cachesButton.image = statusAvailable
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
+            //let pickManager = pickManagers[selectedIndex]
+            let pickManager = self.getCurretPickManager()
+            
+            // Dump metadata
+            if pickManager.dumpmetaFileExists {
+                self.dumpMetaButton.isEnabled = false
+                self.dumpMetaButton.image = self.statusAvailable
             }
             else {
-                cachesButton.isEnabled = true
-                cachesButton.image = statusNone
+                self.dumpMetaButton.isEnabled = true
+                self.dumpMetaButton.image = self.statusNone
+                
             }
-        }
-        else {
-            cachesButton.isEnabled = false
-            cachesButton.image = statusNone
-        }
+            
+            // Utm coordinates
+            if pickManager.utmFileExists {
+                self.utmCoordinatesButton.isEnabled = false
+                self.utmCoordinatesButton.image = self.statusAvailable
+                self.workingOnUtmFile = false
+            }
+            else {
+                if self.workingOnUtmFile {
+                    self.utmCoordinatesButton.image = self.statusPartiallyAvailable
+                }
+                else {
+                    self.utmCoordinatesButton.isEnabled = true
+                    self.utmCoordinatesButton.image = self.statusNone
+                }
+            }
+            
+            // Caches
+            if pickManager.utmFileExists {
+                if pickManager.cacheFilesExist {
+                    self.cachesButton.isEnabled = false
+                    self.cachesButton.image = self.statusAvailable
+                    self.cachesLabel.stringValue = "Caches (\(pickManager.cacheFilesUrls.count) lines)"
+                    self.workingOnChaces = false
+                }
+                else {
+                    if self.workingOnChaces  {
+                        self.cachesButton.image = self.statusPartiallyAvailable
+                        self.cachesButton.isEnabled = false
+                    }
+                    else {
+                        self.cachesButton.isEnabled = true
+                        self.cachesButton.image = self.statusNone
+                    }
+                    self.cachesLabel.stringValue = "Caches"
+                }
+            }
+            else {
+                self.cachesButton.isEnabled = false
+                self.cachesButton.image = self.statusNone
+                self.cachesLabel.stringValue = "Caches"
+            }
+            
+            // Picked
+            if pickManager.cacheFilesExist {
+                self.pickedButton.isEnabled = true
+                if pickManager.pickedFilesExist {
+                    if pickManager.cacheFilesUrls.count == pickManager.pickedLines.count {
+                        self.pickedButton.image = self.statusAvailable
+                    }
+                    else {
+                        self.pickedButton.image = self.statusPartiallyAvailable
+                    }
+                    let pickedLines = self.getNumberArrayAsString(numbers: pickManager.pickedLines)
+                    self.pickedLabel.stringValue = "Picked lines (\(pickedLines))"
+                }
+                else {
+                    self.pickedButton.image = self.statusPartiallyAvailable
+                    self.pickedLabel.stringValue = "Picked"
+                }
+            }
+            else {
+                self.pickedButton.isEnabled = false
+                self.pickedButton.image = self.statusNone
+                self.pickedLabel.stringValue = "Picked"
+            }
+            
+            // Rated
+            if pickManager.cacheFilesExist {
+                self.ratedButton.isEnabled = true
+                if pickManager.ratedLines.count > 0 {
+                    if pickManager.cacheFilesUrls.count == pickManager.ratedLines.count {
+                        self.ratedButton.image = self.statusAvailable
+                    }
+                    else {
+                        self.ratedButton.image = self.statusPartiallyAvailable
+                    }
+                    let ratedLines = self.getNumberArrayAsString(numbers: pickManager.ratedLines)
+                    self.ratedLabel.stringValue = "Rated lines (\(ratedLines))"
+                }
+                else {
+                    self.ratedButton.image = self.statusPartiallyAvailable
+                    self.ratedLabel.stringValue = "Rated"
+                }
+            }
+            else {
+                self.ratedButton.isEnabled = false
+                self.ratedButton.image = self.statusNone
+                self.ratedLabel.stringValue = "Rated"
+            }
+            
+            // Offsets
+            if pickManager.dumpmetaFileExists {
+                if pickManager.offsetFileExists {
+                    self.offsetsButton.isEnabled = true
+                    self.offsetsButton.image = self.statusAvailable
+                }
+                else {
+                    self.offsetsButton.isEnabled = true
+                    self.offsetsButton.image = self.statusNone
+                }
+            }
+            else {
+                self.offsetsButton.isEnabled = false
+                self.offsetsButton.image = self.statusNone
+            }
+        })
     }
     
-    
-    // Populate h5 picker
-    func populateH5Picker(){
-        
+    func getNumberArrayAsString(numbers: [Int]) -> String {
+        var returnString = ""
+        var i = 0
+        for number in numbers {
+            if i != 0 { returnString.append(", ") }
+            returnString.append(String(number))
+            i += 1
+        }
+        return returnString
     }
-
 }
 

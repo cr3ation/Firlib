@@ -17,16 +17,25 @@ class PickManager {
     
     // Public properties
     var h5FileExists: Bool = false
+    var dumpmetaFileExists: Bool = false
     var utmFileExists: Bool = false
     var cacheFilesExist: Bool = false
-    var dumpmetaFileExists: Bool = false
+    var pickedFilesExist: Bool = false
+    var offsetFileExists: Bool = false
     
+    var pickedLines: [Int] = []
+    var unpickedLines: [Int] = []
+    var ratedLines: [Int] = []
     
     // Generated files
     let h5FileUrl: URL
     private let utmFileUrl: URL
-    private let cacheFileUrl: URL
     private let dumpmetaFileUrl: URL
+    private let offsetFileUrl: URL
+    
+    var cacheFilesUrls: [URL] = []
+    var pickFilesUrls: [URL] = []
+    var ratingFilesUrls: [URL] = []
     
     // Folders
     private let irlibFolderUrl: URL
@@ -76,8 +85,14 @@ class PickManager {
         // Picking files
         self.h5FileUrl = h5FileUrl
         self.utmFileUrl = self.dataFolderUrl.appendingPathComponent(self.prefix + "_utm.h5")
-        self.cacheFileUrl = self.cacheFolderUrl.appendingPathComponent(self.prefix + "_utm_line0_0.ird")
-        self.dumpmetaFileUrl = self.dataFolderUrl.appendingPathComponent(self.prefix + "_utm_dump.csv")
+        self.dumpmetaFileUrl = self.dataFolderUrl.appendingPathComponent(self.prefix + "_utm_metadata.csv")
+        self.offsetFileUrl = self.dataFolderUrl.appendingPathComponent(self.prefix + "_utm_offsets.csv")
+        self.cacheFilesUrls = getFilesUrls(folder: cacheFolderUrl, nameFilter: self.prefix + "_utm_line")
+        self.pickFilesUrls = getFilesUrls(folder: pickingFolderUrl, nameFilter: self.prefix + "_utm_line")
+        
+        // Others
+        self.pickedLines = getLines(folderUrl: self.pickingFolderUrl, nameFilter: self.prefix + "_utm_line")
+        self.ratedLines = getLines(folderUrl: self.ratingFolderUrl, nameFilter: self.prefix + "_utm_line")
         
         checkIfFilesExists()
     }
@@ -85,21 +100,29 @@ class PickManager {
     // Helper functions
     func checkIfFilesExists(){
         self.h5FileExists = FileManager.default.fileExists(atPath: self.h5FileUrl.path)
-        self.utmFileExists = FileManager.default.fileExists(atPath: self.utmFileUrl.path)
-        self.cacheFilesExist = FileManager.default.fileExists(atPath: self.cacheFileUrl.path)
         self.dumpmetaFileExists = FileManager.default.fileExists(atPath: self.dumpmetaFileUrl.path)
+        self.utmFileExists = FileManager.default.fileExists(atPath: self.utmFileUrl.path)
+        if cacheFilesUrls.count > 0 {
+            self.cacheFilesExist = true
+        }
+        if pickFilesUrls.count > 0 {
+            self.pickedFilesExist = true
+        }
+        self.offsetFileExists = FileManager.default.fileExists(atPath: self.offsetFileUrl.path)
     }
     
     // -------------- Call python stuff ------------------
+    func generateMetadata(){
+        let(_, _) = openShell(launchPath: "/usr/bin/osascript", arguments: [appleScriptUrl.path, irlibFolderUrl.path, pythonPath, h5_dumpmetaUrl.path, h5FileUrl.path,  ">", dumpmetaFileUrl.path])
+    }
+    
     func generateUtmFile(){
         runPython(arguments: [self.h5_add_utmUrl.path, self.h5FileUrl.path, self.utmFileUrl.path])
-        sleep(10)
-        self.utmFileExists = true
     }
     
     func generateCaches(){
         runPython(arguments: [self.h5_generate_cachesUrl.path, "-g", "-b", "-r", utmFileUrl.path])
-        sleep(20)
+        
         self.cacheFilesExist = true
     }
     
@@ -110,10 +133,18 @@ class PickManager {
     func openIcerate(){
         let(_, _) = openShell(launchPath: "/usr/bin/osascript", arguments: [appleScriptUrl.path, irlibFolderUrl.path, pythonPath, icerateUrl.path, "-f", utmFileUrl.path])
     }
+    
+    func generateOffsets(){
+        if FileManager.default.fileExists(atPath: self.offsetFileUrl.path) == false {
+            copyItem(atURL: self.dumpmetaFileUrl, toURL: self.offsetFileUrl)
+        }
+        let(_, _, _) = runCommand(cmd: "/usr/bin/open", args: self.offsetFileUrl.path)
+    }
+    
     // ---------------------------------------------------
     
     
-    func shell(launchPath: String, arguments: [String] = []) -> (String? , Int32) {
+    private func shell(launchPath: String, arguments: [String] = []) -> (String? , Int32) {
         let task = Process()
         task.launchPath = launchPath
         task.arguments = arguments
@@ -128,7 +159,7 @@ class PickManager {
         return (output, task.terminationStatus)
     }
     
-    func openShell(launchPath: String, arguments: [String]) -> (String? , Int32) {
+    private func openShell(launchPath: String, arguments: [String]) -> (String? , Int32) {
         let task = Process()
         task.launchPath = launchPath
         task.arguments = arguments
@@ -143,7 +174,7 @@ class PickManager {
         return (output, task.terminationStatus)
     }
     
-    func runCommand(cmd : String, args : String...) -> (output: [String], error: [String], exitCode: Int32) {
+    private func runCommand(cmd : String, args : String...) -> (output: [String], error: [String], exitCode: Int32) {
         
         var output : [String] = []
         var error : [String] = []
@@ -177,9 +208,6 @@ class PickManager {
         return (output, error, status)
     }
     
-    
-    
-    
     private func runPython(arguments: [String] = []){
         let process = Process()
         process.launchPath = pythonPath
@@ -189,6 +217,64 @@ class PickManager {
         //                     "/Users/henrikengstrom/PycharmProjects/irlib_demo/data/sallad.h5" ]
         process.arguments = arguments
         process.launch()
+    }
+    
+    private func copyItem(atURL: URL, toURL: URL){
+        let fileManager = FileManager.default
+        do {
+            try fileManager.copyItem(at: atURL, to: toURL)
+        }
+        catch let error as NSError {
+            print("Ooops! Something went wrong: \(error)")
+        }
+    }
+
+    private func getFiles(folderUrl: URL, fileNameFilter: String) -> [URL]{
+        let filesUrl = contentsOf(folder: folderUrl)
+        var foundFilesUrl: [URL] = []
+        
+        // All h5 files, not _utm.h5
+        for fileUrl in filesUrl {
+            var pathComponents = fileUrl.pathComponents
+            
+            // Files with matching name filter
+            if pathComponents[pathComponents.count - 1].lowercased().range(of: fileNameFilter.lowercased()) != nil {
+                foundFilesUrl.append(fileUrl)
+            }
+        }
+        return foundFilesUrl
+    }
+    
+    // Returns all files in folder
+    private func contentsOf(folder: URL) -> [URL] {
+        let fileManager = FileManager.default
+        do {
+            let contents = try fileManager.contentsOfDirectory(atPath: folder.path)
+            let urls = contents.map { return folder.appendingPathComponent($0) }
+            return urls
+        } catch {
+            print(error)
+            return []
+        }
+    }
+    
+    private func getFilesUrls(folder: URL, nameFilter: String) -> [URL] {
+        return getFiles(folderUrl: folder, fileNameFilter: nameFilter)
+    }
+    
+    private func getLines(folderUrl: URL, nameFilter: String) -> [Int] {
+        let pickedFilesUrls = getFilesUrls(folder: folderUrl, nameFilter: nameFilter)
+        var pickedFileNumbers: [Int] = []
+        
+        for pickedFileUrl in pickedFilesUrls {
+            var pickFileName = pickedFileUrl.lastPathComponent
+            pickFileName.removeLast(4)
+            let stringLength = pickFileName.count
+            pickFileName.removeFirst(stringLength - 1)
+            pickedFileNumbers.append(Int(pickFileName)!)
+        }
+        pickedFileNumbers.sort()
+        return pickedFileNumbers
     }
 }
 
