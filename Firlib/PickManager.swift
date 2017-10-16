@@ -10,7 +10,7 @@ import Foundation
 class PickManager {
     // Settings
     let prefix: String
-    let pythonPath = "/Users/henrikengstrom/Documents/venv-27/bin/python"
+    var pythonPath = ""
     
     // Temporary - to remove/change/fix
     private let appleScriptUrl: URL
@@ -54,6 +54,12 @@ class PickManager {
     
     init(h5FileUrl: URL, irlibUrl: URL){
         // settings
+        let defaults = UserDefaults.standard
+        let pyPath = defaults.value(forKey: "pythonPath")
+        if pyPath != nil {
+            self.pythonPath = pyPath as! String
+        }
+        
         let cacheFolderName = "cache"
         let dataFolderName = "data"
         let offsetsFolderName = "offsets"

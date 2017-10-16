@@ -8,12 +8,13 @@
 import Cocoa
 
 class ViewController: NSViewController {
-    let irlibPath: String = "/Users/henrikengstrom/PycharmProjects/irlib_demo"
+    var irlibPath: String = ""
     let statusAvailable = NSImage(named: NSImage.Name(rawValue: "NSStatusAvailable"))
     let statusNone = NSImage(named: NSImage.Name(rawValue: "NSStatusNone"))
     let statusPartiallyAvailable = NSImage(named: NSImage.Name(rawValue: "NSStatusPartiallyAvailable"))
     
-    var timer = Timer()
+    var timer = Timer()     // Updates GUI
+    var timer2 = Timer()    // Look for irlib folder
     
     // Working on
     var workingOnUtmFile = false
@@ -41,11 +42,6 @@ class ViewController: NSViewController {
         updateGuiComponents()
     }
 
-    @IBAction func refreshButtonClicked(_ sender: Any) {
-        updateGuiComponents()
-    }
-    
-    
     @IBAction func dumpMetaButtonClicked(_ sender: Any) {
         dumpMetaButton.isEnabled = false;
         getCurretPickManager().generateMetadata()
@@ -75,7 +71,6 @@ class ViewController: NSViewController {
 
     @IBAction func offsetsButtonClicked(_ sender: Any) {
         getCurretPickManager().generateOffsets()
-        updateGuiComponents(delay: 5)
     }
 
     
@@ -84,6 +79,9 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        //let defaults = UserDefaults.standard
+        //defaults.removeObject(forKey: "pythonPath")
+        //defaults.removeObject(forKey: "irlibPath")
         initialSetup()
     }
 
@@ -102,13 +100,34 @@ class ViewController: NSViewController {
     }
     
     // Initial setup
-    func initialSetup(){
-        let h5FilesUrl = getH5Files()
-        h5FileSelector.removeAllItems()
+    @objc func initialSetup(){
+        // Load python path
+        let defaults = UserDefaults.standard
         
+        let pythonPath = defaults.value(forKey: "pythonPath")
+        if pythonPath == nil {
+            defaults.setValue("/usr/bin/python", forKeyPath: "pythonPath")
+        }
+        // Load irlib path
+        let irlibPath = defaults.value(forKey: "irlibPath")
+        if irlibPath == nil {
+            if !timer2.isValid {
+                let (_) = dialogOK(question: "Welcome to Firlib! Time to set things up...", text: "It looks like you haven't selected where your irlib folder is. Open Preferences... (⌘,) and select your irlib directory. \n\nWhile you're at it you may want to select another python environment as well.")
+                timer2 = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.initialSetup), userInfo: nil, repeats: true)
+            }
+            return
+        } else {
+            self.irlibPath = defaults.value(forKey: "irlibPath") as! String
+            timer2.invalidate()
+        }
+        
+        // Find h5 files in data folder
+        let h5FilesUrl = getH5Files()
+        self.h5FileSelector.removeAllItems()
+        if h5FilesUrl.count == 0 { return }
         for h5FileUrl in h5FilesUrl{
             let fileName = h5FileUrl.pathComponents.last
-            h5FileSelector.addItem(withTitle: fileName!)
+            self.h5FileSelector.addItem(withTitle: fileName!)
         }
         //Start timer
         updateGuiComponents()
@@ -151,13 +170,13 @@ class ViewController: NSViewController {
     
     // Only used by timer
     @objc func updateGuiNow() {
-        updateGuiComponents(delay: 0)
+        updateGuiComponents()
     }
     
     // Validate GUI
-    func updateGuiComponents(delay: Int = 0)
+    func updateGuiComponents()
     {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
+        //DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
             //let pickManager = pickManagers[selectedIndex]
             let pickManager = self.getCurretPickManager()
             
@@ -277,7 +296,7 @@ class ViewController: NSViewController {
                 self.offsetsButton.isEnabled = false
                 self.offsetsButton.image = self.statusNone
             }
-        })
+        //})
     }
     
     func getNumberArrayAsString(numbers: [Int]) -> String {
@@ -289,6 +308,15 @@ class ViewController: NSViewController {
             i += 1
         }
         return returnString
+    }
+    
+    func dialogOK(question: String, text: String) -> Bool {
+        let alert = NSAlert()
+        alert.messageText = question
+        alert.informativeText = text
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "OK")
+        return alert.runModal() == .alertFirstButtonReturn
     }
 }
 
