@@ -19,6 +19,8 @@ class ViewController: NSViewController {
     // Working on
     var workingOnUtmFile = false
     var workingOnChaces = false
+    var workingOnOffset = false
+    var workingOnResult = false
     
     //var pickManagers: [PickManager] = []
     var selectedIndex = 0
@@ -30,12 +32,14 @@ class ViewController: NSViewController {
     @IBOutlet weak var pickedButton: NSButton!
     @IBOutlet weak var ratedButton: NSButton!
     @IBOutlet weak var offsetsButton: NSButton!
+    @IBOutlet weak var resultButton: NSButton!
+    
+    
     
     @IBOutlet weak var cachesLabel: NSTextField!
-    
     @IBOutlet weak var pickedLabel: NSTextField!
-    
     @IBOutlet weak var ratedLabel: NSTextField!
+    @IBOutlet weak var offsetLabel: NSTextField!
     
     // When a new file is selected in drop down
     @IBAction func newFileSelected(_ sender: Any) {
@@ -43,8 +47,13 @@ class ViewController: NSViewController {
     }
 
     @IBAction func dumpMetaButtonClicked(_ sender: Any) {
+        let pickManager = getCurretPickManager()
+        if pickManager.dumpmetaFileExists {
+            let (_) = pickManager.shell(launchPath: "/usr/bin/open", arguments: [pickManager.dumpmetaFileUrl.path])
+            return
+        }
         dumpMetaButton.isEnabled = false;
-        getCurretPickManager().generateMetadata()
+        pickManager.generateMetadata()
     }
     
     @IBAction func utmCoordinatesButtonClicked(_ sender: Any) {
@@ -53,6 +62,7 @@ class ViewController: NSViewController {
         workingOnUtmFile = true
         getCurretPickManager().generateUtmFile()
     }
+    
     
     @IBAction func cachesButtonClicked(_ sender: Any) {
         cachesButton.isEnabled = false
@@ -70,11 +80,31 @@ class ViewController: NSViewController {
     }
 
     @IBAction func offsetsButtonClicked(_ sender: Any) {
-        getCurretPickManager().generateOffsets()
+        let pickManager = getCurretPickManager()
+        if offsetsButton.image == statusAvailable {
+            let (_) = pickManager.shell(launchPath: "/usr/bin/open", arguments: [pickManager.offsetFileUrl.path])
+            return
+        }
+        offsetsButton.isEnabled = false
+        offsetsButton.image = statusPartiallyAvailable
+        workingOnOffset = true
+        pickManager.generateOffsets()
     }
+    
+    @IBAction func resultButtonClicked(_ sender: Any) {
+        let pickManager = getCurretPickManager()
+        if resultButton.image == statusAvailable {
+            let (_) = pickManager.shell(launchPath: "/usr/bin/open", arguments: [pickManager.iceThicknessFileUrl.path])
+            return
+        }
+        resultButton.isEnabled = false
+        resultButton.image = statusPartiallyAvailable
+        workingOnResult = true
+        getCurretPickManager().generateResult()
+    }
+    
 
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -82,6 +112,7 @@ class ViewController: NSViewController {
         //let defaults = UserDefaults.standard
         //defaults.removeObject(forKey: "pythonPath")
         //defaults.removeObject(forKey: "irlibPath")
+        //defaults.removeObject(forKey: "antennaSpacing")
         initialSetup()
     }
 
@@ -90,6 +121,9 @@ class ViewController: NSViewController {
         // Update the view, if already loaded.
         }
     }
+    
+    
+    
     
     // Returns the selected pickManager
     func getCurretPickManager() -> PickManager {
@@ -104,15 +138,20 @@ class ViewController: NSViewController {
         // Load python path
         let defaults = UserDefaults.standard
         
+        // Load python path from defaults
         let pythonPath = defaults.value(forKey: "pythonPath")
         if pythonPath == nil {
             defaults.setValue("/usr/bin/python", forKeyPath: "pythonPath")
         }
-        // Load irlib path
+        let antennaSpacing = defaults.integer(forKey: "antennaSpacing")
+        if antennaSpacing == 0 {
+            defaults.set(60, forKey: "antennaSpacing")
+        }
+        // Load irlib path from defaults
         let irlibPath = defaults.value(forKey: "irlibPath")
         if irlibPath == nil {
             if !timer2.isValid {
-                let (_) = dialogOK(question: "Welcome to Firlib! Time to set things up...", text: "It looks like you haven't selected where your irlib folder is. Open Preferences... (⌘,) and select your irlib directory. \n\nWhile you're at it you may want to select another python environment as well.")
+                let (_) = dialogOK(question: "Welcome to Firlib! Time to set things up...", text: "It looks like you haven't selected where your irlib folder is. Open Preferences (⌘,) and select your irlib directory. \n\nWhile you're at it you may want to select another python environment and set the antenna spacing as well.")
                 timer2 = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.initialSetup), userInfo: nil, repeats: true)
             }
             return
@@ -182,7 +221,7 @@ class ViewController: NSViewController {
             
             // Dump metadata
             if pickManager.dumpmetaFileExists {
-                self.dumpMetaButton.isEnabled = false
+                self.dumpMetaButton.isEnabled = true
                 self.dumpMetaButton.image = self.statusAvailable
             }
             else {
@@ -283,19 +322,51 @@ class ViewController: NSViewController {
             
             // Offsets
             if pickManager.dumpmetaFileExists {
+                self.offsetLabel.stringValue = "Offsets (\(String(pickManager.antennaSpacing)) m)"
                 if pickManager.offsetFileExists {
                     self.offsetsButton.isEnabled = true
                     self.offsetsButton.image = self.statusAvailable
+                    workingOnOffset = false
                 }
                 else {
-                    self.offsetsButton.isEnabled = true
-                    self.offsetsButton.image = self.statusNone
+                    if workingOnOffset {
+                        self.offsetsButton.image = self.statusPartiallyAvailable
+                        self.offsetsButton.isEnabled = false
+                    } else {
+                        self.offsetsButton.isEnabled = true
+                        self.offsetsButton.image = self.statusNone
+                    }
                 }
             }
             else {
                 self.offsetsButton.isEnabled = false
                 self.offsetsButton.image = self.statusNone
+                self.offsetLabel.stringValue = "Offsets"
             }
+        
+        // Result
+        if pickManager.offsetFileExists {
+            if pickManager.iceThicknessFileExists {
+                self.resultButton.isEnabled = true
+                self.resultButton.image = self.statusAvailable
+                workingOnResult = false
+            }
+            else {
+                if workingOnResult {
+                    self.resultButton.image = self.statusPartiallyAvailable
+                    self.resultButton.isEnabled = false
+                } else {
+                    self.resultButton.isEnabled = true
+                    self.resultButton.image = self.statusNone
+                }
+            }
+        }
+        else {
+            self.resultButton.isEnabled = false
+            self.resultButton.image = self.statusNone
+        }
+        
+        
         //})
     }
     
