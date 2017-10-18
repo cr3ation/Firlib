@@ -20,12 +20,13 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
+                                                <segue destination="WWT-aS-d3t" kind="modal" id="YXG-uu-wJx"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
                                         <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
                                             <connections>
-                                                <segue destination="LqR-SV-obF" kind="show" id="SAT-o2-0W2"/>
+                                                <segue destination="LqR-SV-obF" kind="show" id="gEM-37-yCf"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
@@ -713,7 +714,7 @@
                     <window key="window" title="About Firlib" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="YxD-PB-1uc">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="328" y="257" width="367" height="217"/>
+                        <rect key="contentRect" x="328" y="257" width="390" height="356"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
                         <connections>
                             <outlet property="delegate" destination="WWT-aS-d3t" id="PKR-bc-OwQ"/>
@@ -725,7 +726,7 @@
                 </windowController>
                 <customObject id="Ggz-lR-0RU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="292" y="-411"/>
+            <point key="canvasLocation" x="519" y="-487"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="laf-o6-He6">
@@ -745,7 +746,7 @@
                 </viewController>
                 <customObject id="c8n-Ja-G3V" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="779.5" y="-561.5"/>
+            <point key="canvasLocation" x="1049" y="-490"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="K0O-oH-UDM">
@@ -865,19 +866,15 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="Zoq-dq-g9L" name="value" keyPath="values.antennaSpacing" id="dtp-UO-hAp">
-                                                    <dictionary key="options">
-                                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                                    </dictionary>
-                                                </binding>
+                                                <binding destination="Zoq-dq-g9L" name="value" keyPath="values.antennaSpacing" id="rqP-Wn-4oP"/>
                                             </connections>
                                         </textField>
-                                        <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jLy-xi-OdP">
+                                        <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kS6-SF-Gf8">
                                             <rect key="frame" x="58" y="20" width="19" height="27"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <stepperCell key="cell" continuous="YES" alignment="left" maxValue="999" id="hbN-oG-grg"/>
+                                            <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="WG6-dE-7ta"/>
                                             <connections>
-                                                <binding destination="Zoq-dq-g9L" name="value" keyPath="values.antennaSpacing" id="4nC-KH-3bm"/>
+                                                <binding destination="Zoq-dq-g9L" name="value" keyPath="values.antennaSpacing" id="8S3-Nx-djg"/>
                                             </connections>
                                         </stepper>
                                     </subviews>
@@ -925,7 +922,7 @@
                                 <rect key="frame" x="129" y="141" width="119" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(1, 4)" id="Y8Q-b0-91w">
-                                    <font key="font" metaFont="system" size="11"/>
+                                    <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -943,7 +940,7 @@
                                 <rect key="frame" x="129" y="116" width="119" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(1, 4)" id="oYQ-Tl-UOJ">
-                                    <font key="font" metaFont="system" size="11"/>
+                                    <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -961,7 +958,7 @@
                                 <rect key="frame" x="129" y="91" width="119" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(1, 4)" id="3DE-3U-7KG">
-                                    <font key="font" metaFont="system" size="11"/>
+                                    <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -1083,7 +1080,7 @@
                                 </connections>
                             </button>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="E8a-OL-T4u">
-                                <rect key="frame" x="20" y="31" width="254" height="4"/>
+                                <rect key="frame" x="20" y="31" width="254" height="5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </box>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rjs-p1-vTS" userLabel="Antenna Spacing Label">

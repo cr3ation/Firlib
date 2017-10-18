@@ -144,9 +144,7 @@ class PickManager {
     }
     
     func generateCaches(){
-        runPython(arguments: [self.h5_generate_cachesUrl.path, "-g", "-b", "-r", utmFileUrl.path])
-        
-        self.cacheFilesExist = true
+        runPython(arguments: [self.h5_generate_cachesUrl.path, "-g", "-b", "-r", utmFileUrl.path])        
     }
     
     func generateOffsets(){
@@ -167,7 +165,7 @@ class PickManager {
     }
     
     func openIcerate(){
-        let(_, _) = openShell(launchPath: "/usr/bin/osascript", arguments: [appleScriptUrl.path, irlibFolderUrl.path, pythonPath, icerateUrl.path, "-f", utmFileUrl.path])
+        let(_, _) = openShell(launchPath: "/usr/bin/osascript", arguments: [appleScriptUrl.path, irlibFolderUrl.path, pythonPath, icerateUrl.path, "-f", utmFileUrl.path, "-L", "0"])
     }
     
     // ---------------------------------------------------

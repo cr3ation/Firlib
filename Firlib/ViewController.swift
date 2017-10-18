@@ -371,8 +371,6 @@ class ViewController: NSViewController {
     }
     
     func getNumberArrayAsString(numbers: [Int]) -> String {
-        
-        var cacheLines = getCurretPickManager().cachedLines.count
         var returnString = ""
         var i = 0
         for number in numbers {
