@@ -710,7 +710,7 @@
         <!--Window Controller-->
         <scene sceneID="zTT-va-EIr">
             <objects>
-                <windowController id="WWT-aS-d3t" sceneMemberID="viewController">
+                <windowController showSeguePresentationStyle="single" id="WWT-aS-d3t" sceneMemberID="viewController">
                     <window key="window" title="About Firlib" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="YxD-PB-1uc">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -751,7 +751,7 @@
         <!--Window Controller-->
         <scene sceneID="K0O-oH-UDM">
             <objects>
-                <windowController id="LqR-SV-obF" sceneMemberID="viewController">
+                <windowController showSeguePresentationStyle="single" id="LqR-SV-obF" sceneMemberID="viewController">
                     <window key="window" title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="nS8-6t-Duq">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
