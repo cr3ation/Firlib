@@ -322,7 +322,6 @@ class ViewController: NSViewController {
             
             // Offsets
             if pickManager.dumpmetaFileExists {
-                self.offsetLabel.stringValue = "Offsets (\(String(pickManager.antennaSpacing)) m)"
                 if pickManager.offsetFileExists {
                     self.offsetsButton.isEnabled = true
                     self.offsetsButton.image = self.statusAvailable
@@ -341,7 +340,6 @@ class ViewController: NSViewController {
             else {
                 self.offsetsButton.isEnabled = false
                 self.offsetsButton.image = self.statusNone
-                self.offsetLabel.stringValue = "Offsets"
             }
         
         // Result
