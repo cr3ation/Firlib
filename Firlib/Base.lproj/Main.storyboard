@@ -913,7 +913,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drZ-vG-9ed">
-                                <rect key="frame" x="74" y="144" width="147" height="17"/>
+                                <rect key="frame" x="74" y="144" width="51" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Cache" id="hwR-pq-FtM">
                                     <font key="font" metaFont="system"/>
@@ -921,8 +921,17 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IZ6-gH-96a" userLabel="Cache Line Numbers">
+                                <rect key="frame" x="129" y="141" width="119" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(1, 4)" id="Y8Q-b0-91w">
+                                    <font key="font" metaFont="system" size="11"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="STR-AO-jZ0">
-                                <rect key="frame" x="74" y="119" width="222" height="17"/>
+                                <rect key="frame" x="74" y="119" width="45" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Picked" id="dk9-wZ-DjL">
                                     <font key="font" metaFont="system"/>
@@ -930,8 +939,17 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vVI-ot-vzO" userLabel="Picked Line Numbers">
+                                <rect key="frame" x="129" y="116" width="119" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(1, 4)" id="oYQ-Tl-UOJ">
+                                    <font key="font" metaFont="system" size="11"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nce-Ze-e9N">
-                                <rect key="frame" x="74" y="94" width="222" height="17"/>
+                                <rect key="frame" x="74" y="94" width="51" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Rated" id="DIr-1u-KZA">
                                     <font key="font" metaFont="system"/>
@@ -939,8 +957,17 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b0l-No-YK6" userLabel="Rated Line Numbers">
+                                <rect key="frame" x="129" y="91" width="119" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(1, 4)" id="3DE-3U-7KG">
+                                    <font key="font" metaFont="system" size="11"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fRI-LQ-Uco">
-                                <rect key="frame" x="74" y="69" width="116" height="17"/>
+                                <rect key="frame" x="74" y="69" width="56" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Offsets" id="Uez-8O-MfA">
                                     <font key="font" metaFont="system"/>
@@ -1056,7 +1083,7 @@
                                 </connections>
                             </button>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="E8a-OL-T4u">
-                                <rect key="frame" x="20" y="31" width="254" height="5"/>
+                                <rect key="frame" x="20" y="31" width="254" height="4"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </box>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rjs-p1-vTS" userLabel="Antenna Spacing Label">
@@ -1093,15 +1120,15 @@
                     </view>
                     <connections>
                         <outlet property="cachesButton" destination="yLF-ac-C4l" id="pht-9E-zYc"/>
-                        <outlet property="cachesLabel" destination="drZ-vG-9ed" id="y4M-DP-A4t"/>
+                        <outlet property="cachesLabel" destination="IZ6-gH-96a" id="ysj-Us-Y7N"/>
                         <outlet property="dumpMetaButton" destination="zd5-pF-q87" id="hua-YW-27Z"/>
                         <outlet property="h5FileSelector" destination="KIy-nz-Nhj" id="5Bf-JU-rDX"/>
                         <outlet property="offsetLabel" destination="fRI-LQ-Uco" id="3OV-5E-Zt3"/>
                         <outlet property="offsetsButton" destination="Oc6-um-XcP" id="zBr-L2-UoI"/>
                         <outlet property="pickedButton" destination="Qrk-bg-7Gd" id="BID-Eg-PoF"/>
-                        <outlet property="pickedLabel" destination="STR-AO-jZ0" id="pPc-Wy-fxT"/>
+                        <outlet property="pickedLabel" destination="vVI-ot-vzO" id="ZeN-Eq-U3p"/>
                         <outlet property="ratedButton" destination="Ya1-dI-mFe" id="izh-FS-mew"/>
-                        <outlet property="ratedLabel" destination="Nce-Ze-e9N" id="Sbu-Og-OWd"/>
+                        <outlet property="ratedLabel" destination="b0l-No-YK6" id="QPS-t1-QMg"/>
                         <outlet property="resultButton" destination="sCU-oM-zJL" id="Q3C-MP-58j"/>
                         <outlet property="utmCoordinatesButton" destination="7ay-Vd-qQS" id="TRY-Zr-6Xa"/>
                     </connections>

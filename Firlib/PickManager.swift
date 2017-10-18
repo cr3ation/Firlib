@@ -29,6 +29,7 @@ class PickManager {
     var pickedLines: [Int] = []
     var unpickedLines: [Int] = []
     var ratedLines: [Int] = []
+    var cachedLines: [Int] = []
     
     // Generated files
     let h5FileUrl: URL
@@ -113,6 +114,7 @@ class PickManager {
         // Others
         self.pickedLines = getLines(folderUrl: self.pickingFolderUrl, nameFilter: self.prefix + "_utm_line")
         self.ratedLines = getLines(folderUrl: self.ratingFolderUrl, nameFilter: self.prefix + "_utm_line")
+        self.cachedLines = getLines(folderUrl: self.cacheFolderUrl, nameFilter: self.prefix + "_utm_line", removeLast: 6)
         
         checkIfFilesExists()
     }
@@ -286,13 +288,13 @@ class PickManager {
         }
     }
     
-    private func getLines(folderUrl: URL, nameFilter: String) -> [Int] {
+    private func getLines(folderUrl: URL, nameFilter: String, removeLast: Int = 4) -> [Int] {
         let pickedFilesUrls = getFilesUrls(folderUrl: folderUrl, nameFilter: nameFilter)
         var pickedFileNumbers: [Int] = []
         
         for pickedFileUrl in pickedFilesUrls {
             var pickFileName = pickedFileUrl.lastPathComponent
-            pickFileName.removeLast(4)
+            pickFileName.removeLast(removeLast)
             let stringLength = pickFileName.count
             pickFileName.removeFirst(stringLength - 1)
             let line = Int(pickFileName)

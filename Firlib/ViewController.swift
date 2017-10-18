@@ -251,7 +251,9 @@ class ViewController: NSViewController {
                 if pickManager.cacheFilesExist {
                     self.cachesButton.isEnabled = false
                     self.cachesButton.image = self.statusAvailable
-                    self.cachesLabel.stringValue = "Caches (\(pickManager.cacheFilesUrls.count) lines)"
+                    let cachedLines = self.getNumberArrayAsString(numbers: pickManager.cachedLines)
+                    self.cachesLabel.stringValue = "Line \(cachedLines)"
+                    //self.cachesLabel.stringValue = "\(pickManager.cacheFilesUrls.count) lines"
                     self.workingOnChaces = false
                 }
                 else {
@@ -263,13 +265,13 @@ class ViewController: NSViewController {
                         self.cachesButton.isEnabled = true
                         self.cachesButton.image = self.statusNone
                     }
-                    self.cachesLabel.stringValue = "Caches"
+                    self.cachesLabel.stringValue = ""
                 }
             }
             else {
                 self.cachesButton.isEnabled = false
                 self.cachesButton.image = self.statusNone
-                self.cachesLabel.stringValue = "Caches"
+                self.cachesLabel.stringValue = ""
             }
             
             // Picked
@@ -283,17 +285,17 @@ class ViewController: NSViewController {
                         self.pickedButton.image = self.statusPartiallyAvailable
                     }
                     let pickedLines = self.getNumberArrayAsString(numbers: pickManager.pickedLines)
-                    self.pickedLabel.stringValue = "Picked lines (\(pickedLines))"
+                    self.pickedLabel.stringValue = "Line \(pickedLines)"
                 }
                 else {
                     self.pickedButton.image = self.statusPartiallyAvailable
-                    self.pickedLabel.stringValue = "Picked"
+                    self.pickedLabel.stringValue = ""
                 }
             }
             else {
                 self.pickedButton.isEnabled = false
                 self.pickedButton.image = self.statusNone
-                self.pickedLabel.stringValue = "Picked"
+                self.pickedLabel.stringValue = ""
             }
             
             // Rated
@@ -307,17 +309,17 @@ class ViewController: NSViewController {
                         self.ratedButton.image = self.statusPartiallyAvailable
                     }
                     let ratedLines = self.getNumberArrayAsString(numbers: pickManager.ratedLines)
-                    self.ratedLabel.stringValue = "Rated lines (\(ratedLines))"
+                    self.ratedLabel.stringValue = "Line \(ratedLines)"
                 }
                 else {
                     self.ratedButton.image = self.statusPartiallyAvailable
-                    self.ratedLabel.stringValue = "Rated"
+                    self.ratedLabel.stringValue = ""
                 }
             }
             else {
                 self.ratedButton.isEnabled = false
                 self.ratedButton.image = self.statusNone
-                self.ratedLabel.stringValue = "Rated"
+                self.ratedLabel.stringValue = ""
             }
             
             // Offsets
@@ -369,13 +371,16 @@ class ViewController: NSViewController {
     }
     
     func getNumberArrayAsString(numbers: [Int]) -> String {
+        
+        var cacheLines = getCurretPickManager().cachedLines.count
         var returnString = ""
         var i = 0
         for number in numbers {
-            if i != 0 { returnString.append(", ") }
+            if i != 0 { returnString.append(" | ") }
             returnString.append(String(number))
             i += 1
         }
+        //returnString.append(String(number))
         return returnString
     }
     
