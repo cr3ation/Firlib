@@ -172,7 +172,11 @@ class PickManager {
     }
     
     func openIcerate(){
-        let(_, _) = openShell(launchPath: "/usr/bin/osascript", arguments: [appleScriptUrl.path, irlibFolderUrl.path, pythonPath, icerateUrl.path, "-f", utmFileUrl.path, "-L", "0"])
+        if self.pickedLines.count == 0 {
+            let (_) = dialogOK(question: "No picked lines", text: "Begin with picking radar profile before any rating can be done.")
+            return
+        }
+        let(_, _) = openShell(launchPath: "/usr/bin/osascript", arguments: [appleScriptUrl.path, irlibFolderUrl.path, pythonPath, icerateUrl.path, "-f", utmFileUrl.path, "-L", String(self.pickedLines[0])])
     }
     
     // ---------------------------------------------------
