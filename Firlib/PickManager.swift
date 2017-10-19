@@ -100,7 +100,14 @@ class PickManager {
         self.prefix = tmpUrl.pathComponents[tmpUrl.pathComponents.count - 1]
         
         // Temp files
-        self.appleScriptUrl = irlibUrl.appendingPathComponent("run_in_terminal.scpt")
+        if let resourcePath = Bundle.main.resourcePath {
+            let fileName = "run_in_terminal.scpt"
+            let appleScriptPath = resourcePath + "/" + fileName
+            self.appleScriptUrl = URL(fileURLWithPath: appleScriptPath)
+        } else {
+            self.appleScriptUrl = irlibUrl.appendingPathComponent("run_in_terminal.scpt")
+        }
+        
         
         // Picking files
         self.h5FileUrl = h5FileUrl
