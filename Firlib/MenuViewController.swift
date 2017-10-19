@@ -13,6 +13,9 @@ class MenuViewController: NSViewController {
     @IBOutlet weak var pythonPathControl: NSPathControl!
     @IBOutlet weak var irlibPathControl: NSPathControl!
     
+    @IBOutlet var aboutView: NSView!
+    
+    
     @IBAction func pickPythonPath(_ sender: Any) {
         let path = openFileDialog(canChooseDirectories: false, canChooseFiles: true)
         if path != nil {
@@ -35,6 +38,9 @@ class MenuViewController: NSViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        self.view.wantsLayer = true
+        let color : CGColor = CGColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.8)
+        self.view.layer?.backgroundColor = color
     }
     
     override var representedObject: Any? {

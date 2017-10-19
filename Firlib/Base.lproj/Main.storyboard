@@ -728,25 +728,37 @@
             </objects>
             <point key="canvasLocation" x="519" y="-487"/>
         </scene>
-        <!--View Controller-->
+        <!--Menu View Controller-->
         <scene sceneID="laf-o6-He6">
             <objects>
-                <viewController id="zCv-jk-uaN" sceneMemberID="viewController">
+                <viewController id="zCv-jk-uaN" customClass="MenuViewController" customModule="Firlib" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Fuy-St-Ci8">
-                        <rect key="frame" x="0.0" y="0.0" width="357" height="361"/>
+                        <rect key="frame" x="0.0" y="0.0" width="492" height="223"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GUO-XI-p63">
-                                <rect key="frame" x="88" y="152" width="181" height="189"/>
+                                <rect key="frame" x="35" y="39" width="133" height="145"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="firlib_icon-256" id="VgP-ll-gCq"/>
                             </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xV0-vf-Swc">
+                                <rect key="frame" x="202" y="142" width="115" height="61"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Firlib" id="uMZ-wt-vHT">
+                                    <font key="font" size="40" name="AvenirNext-UltraLight"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="aboutView" destination="Fuy-St-Ci8" id="dwS-uK-reV"/>
+                    </connections>
                 </viewController>
                 <customObject id="c8n-Ja-G3V" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1049" y="-490"/>
+            <point key="canvasLocation" x="1124" y="-494"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="K0O-oH-UDM">
@@ -1079,10 +1091,6 @@
                                     <action selector="resultButtonClicked:" target="XfG-lQ-9wD" id="0YT-9O-Fgw"/>
                                 </connections>
                             </button>
-                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="E8a-OL-T4u">
-                                <rect key="frame" x="20" y="31" width="254" height="5"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            </box>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rjs-p1-vTS" userLabel="Antenna Spacing Label">
                                 <rect key="frame" x="83" y="8" width="91" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1113,6 +1121,10 @@
                                     <binding destination="XDr-OK-nal" name="value" keyPath="values.antennaSpacing" id="WMu-fI-6ad"/>
                                 </connections>
                             </textField>
+                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="E8a-OL-T4u">
+                                <rect key="frame" x="20" y="-63" width="254" height="198"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </box>
                         </subviews>
                     </view>
                     <connections>
