@@ -728,37 +728,77 @@
             </objects>
             <point key="canvasLocation" x="519" y="-487"/>
         </scene>
-        <!--Menu View Controller-->
+        <!--About View Controller-->
         <scene sceneID="laf-o6-He6">
             <objects>
-                <viewController id="zCv-jk-uaN" customClass="MenuViewController" customModule="Firlib" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="zCv-jk-uaN" customClass="AboutViewController" customModule="Firlib" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Fuy-St-Ci8">
-                        <rect key="frame" x="0.0" y="0.0" width="492" height="223"/>
+                        <rect key="frame" x="0.0" y="0.0" width="492" height="251"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GUO-XI-p63">
-                                <rect key="frame" x="35" y="39" width="133" height="145"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="firlib_icon-256" id="VgP-ll-gCq"/>
-                            </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xV0-vf-Swc">
-                                <rect key="frame" x="202" y="142" width="115" height="61"/>
+                                <rect key="frame" x="202" y="170" width="94" height="61"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Firlib" id="uMZ-wt-vHT">
-                                    <font key="font" size="40" name="AvenirNext-UltraLight"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Firlib" id="uMZ-wt-vHT">
+                                    <font key="font" size="40" name="Avenir-Light"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0f2-uH-t70">
+                                <rect key="frame" x="202" y="148" width="94" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Version 1.0" id="7RH-6x-PZk">
+                                    <font key="font" size="13" name="Avenir-Light"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="DEk-1Q-JhD">
+                                <rect key="frame" x="204" y="168" width="90" height="5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </box>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3B5-QA-5Le">
+                                <rect key="frame" x="204" y="84" width="270" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="justified" title="Firlib is created by Henrik Engström and is intended to work as a GUI-wrapper for irlib by Nat Wilson." id="FcI-AY-W02">
+                                    <font key="font" size="10" name="Avenir-Light"/>
+                                    <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LQc-CF-12g">
+                                <rect key="frame" x="202" y="44" width="270" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="justified" title="This software is licensed under GNU GPL and it's source code is open and free for everyone to change." id="hro-0f-oOa">
+                                    <font key="font" size="10" name="Avenir-Light"/>
+                                    <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cZA-Ml-dUT">
+                                <rect key="frame" x="202" y="0.0" width="270" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="justified" title="Thanks to Nat Wilson and Fanny Ekblom Johansson." id="aff-aF-APY">
+                                    <font key="font" size="10" name="Avenir-Light"/>
+                                    <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GUO-XI-p63">
+                                <rect key="frame" x="34" y="84" width="133" height="145"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="firlib_icon-256" id="VgP-ll-gCq"/>
+                            </imageView>
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="aboutView" destination="Fuy-St-Ci8" id="dwS-uK-reV"/>
+                        <outlet property="versionLabel" destination="0f2-uH-t70" id="w3H-ZM-V3c"/>
                     </connections>
                 </viewController>
                 <customObject id="c8n-Ja-G3V" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1124" y="-494"/>
+            <point key="canvasLocation" x="1124" y="-480.5"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="K0O-oH-UDM">
@@ -1122,7 +1162,7 @@
                                 </connections>
                             </textField>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="E8a-OL-T4u">
-                                <rect key="frame" x="20" y="-63" width="254" height="198"/>
+                                <rect key="frame" x="20" y="-63" width="254" height="5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </box>
                         </subviews>

@@ -9,7 +9,6 @@ import Cocoa
 import Foundation
 
 class MenuViewController: NSViewController {
-  
     @IBOutlet weak var pythonPathControl: NSPathControl!
     @IBOutlet weak var irlibPathControl: NSPathControl!
     
@@ -36,6 +35,7 @@ class MenuViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         // Do any additional setup after loading the view.
         self.view.wantsLayer = true
@@ -71,5 +71,32 @@ class MenuViewController: NSViewController {
             // User clicked on "Cancel"
         }
         return nil
+    }
+}
+
+class AboutViewController: NSViewController {
+    let version: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject
+    
+    @IBOutlet var aboutView: NSView!
+    @IBOutlet weak var versionLabel: NSTextField!
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        // Do any additional setup after loading the view.
+        self.view.wantsLayer = true
+        let color : CGColor = CGColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.95)
+        self.view.layer?.backgroundColor = color
+        
+        self.versionLabel.stringValue = "Version \(version as! String)"
+    }
+    
+    override var representedObject: Any? {
+        didSet {
+            // Update the view, if already loaded.
+        }
     }
 }
