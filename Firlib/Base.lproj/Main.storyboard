@@ -523,11 +523,17 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GUO-XI-p63">
-                                <rect key="frame" x="34" y="84" width="133" height="145"/>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hw7-bV-EfX">
+                                <rect key="frame" x="36" y="106" width="127" height="122"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="firlib_icon-256" id="VgP-ll-gCq"/>
-                            </imageView>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="firlib_icon-256" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="eKa-jw-8Nf">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="logoClicked:" target="zCv-jk-uaN" id="IZ4-iW-u8g"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -574,11 +580,11 @@
                                 <tabViewItems>
                                     <tabViewItem label="Settings" identifier="" id="Ja7-lf-XSQ">
                                         <view key="view" id="xlX-5h-chf">
-                                            <rect key="frame" x="10" y="33" width="404" height="287"/>
+                                            <rect key="frame" x="10" y="33" width="118" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <box toolTip="Select python intepreter to use" fixedFrame="YES" title="Python" translatesAutoresizingMaskIntoConstraints="NO" id="gsn-I2-FTG">
-                                                    <rect key="frame" x="17" y="206" width="371" height="78"/>
+                                                    <rect key="frame" x="17" y="-81" width="371" height="78"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <view key="contentView" id="l3r-Zg-Sq2">
                                                         <rect key="frame" x="2" y="2" width="367" height="61"/>
@@ -610,7 +616,7 @@
                                                     </view>
                                                 </box>
                                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="83n-6i-Chy">
-                                                    <rect key="frame" x="154" y="129" width="48" height="48"/>
+                                                    <rect key="frame" x="154" y="-158" width="48" height="48"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="ibx-lN-tmz">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -618,7 +624,7 @@
                                                     </buttonCell>
                                                 </button>
                                                 <box toolTip="Select irlib root folder" fixedFrame="YES" title="Irlib" translatesAutoresizingMaskIntoConstraints="NO" id="VMO-sM-CCx" userLabel="Irlib">
-                                                    <rect key="frame" x="17" y="113" width="371" height="78"/>
+                                                    <rect key="frame" x="17" y="-174" width="371" height="78"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <view key="contentView" id="bq3-jN-2gU">
                                                         <rect key="frame" x="2" y="2" width="367" height="61"/>
@@ -650,7 +656,7 @@
                                                     </view>
                                                 </box>
                                                 <box toolTip="Distance between antennas in meters. Needed to calculate ice thicknes." fixedFrame="YES" title="Antenna spacing (m)" translatesAutoresizingMaskIntoConstraints="NO" id="sfR-cT-a0P" userLabel="Antenna spacing">
-                                                    <rect key="frame" x="17" y="12" width="371" height="78"/>
+                                                    <rect key="frame" x="17" y="-275" width="371" height="78"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <view key="contentView" id="15O-qZ-Qsk">
                                                         <rect key="frame" x="2" y="2" width="367" height="61"/>

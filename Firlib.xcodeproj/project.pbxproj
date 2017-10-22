@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		50D1C39E1F94945300920CEC /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1C39D1F94945300920CEC /* MenuViewController.swift */; };
 		BE4FE2511F990F8800028A5A /* run_in_terminal.scpt in Resources */ = {isa = PBXBuildFile; fileRef = BE4FE2501F990F8800028A5A /* run_in_terminal.scpt */; };
+		BE9A894A1F9C851200379A72 /* www in Resources */ = {isa = PBXBuildFile; fileRef = BE9A89491F9C844B00379A72 /* www */; };
 		BEA20C161F92B13F00DAC9DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA20C151F92B13F00DAC9DF /* AppDelegate.swift */; };
 		BEA20C181F92B13F00DAC9DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA20C171F92B13F00DAC9DF /* ViewController.swift */; };
 		BEA20C1A1F92B13F00DAC9DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA20C191F92B13F00DAC9DF /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		50D1C39D1F94945300920CEC /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		BE4FE2501F990F8800028A5A /* run_in_terminal.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = run_in_terminal.scpt; sourceTree = "<group>"; };
+		BE9A89491F9C844B00379A72 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		BEA20C121F92B13F00DAC9DF /* Firlib.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Firlib.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEA20C151F92B13F00DAC9DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEA20C171F92B13F00DAC9DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				BEA20C171F92B13F00DAC9DF /* ViewController.swift */,
 				BEA20C191F92B13F00DAC9DF /* Assets.xcassets */,
 				BEA20C1B1F92B13F00DAC9DF /* Main.storyboard */,
+				BE9A89491F9C844B00379A72 /* www */,
 				BEA20C1E1F92B13F00DAC9DF /* Info.plist */,
 				BEA20C1F1F92B13F00DAC9DF /* Firlib.entitlements */,
 				BEA20C251F92B34400DAC9DF /* PickManager.swift */,
@@ -135,6 +138,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE9A894A1F9C851200379A72 /* www in Resources */,
 				BE4FE2511F990F8800028A5A /* run_in_terminal.scpt in Resources */,
 				BEA20C1A1F92B13F00DAC9DF /* Assets.xcassets in Resources */,
 				BEA20C1D1F92B13F00DAC9DF /* Main.storyboard in Resources */,

@@ -32,12 +32,12 @@ class MenuViewController: NSViewController {
     
     @IBAction func downloadButtonClicked(_ sender: Any) {
         let url = "https://github.com/njwilson23/irlib/archive/master.zip"
-        let _ = shell(launchPath: "/usr/bin/open", arguments: ["-a", "safari", url])
+        let _ = HelperFunctions().shell(launchPath: "/usr/bin/open", arguments: ["-a", "safari", url])
     }
     
     @IBAction func tutorialButtonClicked(_ sender: Any) {
         let url = "https://github.com/njwilson23/irlib/blob/master/doc/doc_tutorial.rst"
-        let _ = shell(launchPath: "/usr/bin/open", arguments: ["-a", "safari", url])
+        let _ = HelperFunctions().shell(launchPath: "/usr/bin/open", arguments: ["-a", "safari", url])
     }
     
     
@@ -79,31 +79,30 @@ class MenuViewController: NSViewController {
         }
         return nil
     }
-    
-    func shell(launchPath: String, arguments: [String] = []) -> (String? , Int32) {
-        let task = Process()
-        task.launchPath = launchPath
-        task.arguments = arguments
-        
-        let pipe = Pipe()
-        task.standardOutput = pipe
-        task.standardError = pipe
-        task.launch()
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(data: data, encoding: .utf8)
-        task.waitUntilExit()
-        return (output, task.terminationStatus)
-    }
 }
 
 class AboutViewController: NSViewController {
     let version: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject
+   var logoClicked = 0
     
     @IBOutlet weak var versionLabel: NSTextField!
     
+    @IBAction func logoClicked(_ sender: Any) {
+        self.logoClicked += 1
+        
+        if self.logoClicked == 10 {
+            var url: URL
+            if let resourcePath = Bundle.main.resourcePath {
+                let fileName = "www/fanny_color.html"
+                let htmlPath = resourcePath + "/" + fileName
+                url = URL(fileURLWithPath: htmlPath)
+                let _ = HelperFunctions().shell(launchPath: "/usr/bin/open", arguments: ["-a", "safari", url.path])
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         // Do any additional setup after loading the view.
         self.view.wantsLayer = true
