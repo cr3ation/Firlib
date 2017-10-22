@@ -1,5 +1,5 @@
 # Firlib
-Firlib (Fannys irlib) is a GUI-wrapper for [irlib](https://github.com/njwilson23/irlib/). Irlib is a set of Python tools in order to view and analyze radar data, written by Nat Wilson.
+Firlib (Fannys irlib) is a GUI-wrapper for [irlib](https://github.com/njwilson23/irlib/). Irlib is a set of Python tools in order to view and analyze ice penetrating radar data, written by Nat Wilson.
 
 ![Firlib](https://github.com/cr3ation/Firlib/blob/master/docs/img/firlib.png)
 
