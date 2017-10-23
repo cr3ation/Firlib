@@ -61,16 +61,16 @@
 		BEA20C141F92B13F00DAC9DF /* Firlib */ = {
 			isa = PBXGroup;
 			children = (
-				BEA20C151F92B13F00DAC9DF /* AppDelegate.swift */,
+				BE9A89491F9C844B00379A72 /* www */,
+				BEA20C1F1F92B13F00DAC9DF /* Firlib.entitlements */,
+				BEA20C1E1F92B13F00DAC9DF /* Info.plist */,
 				BE4FE2501F990F8800028A5A /* run_in_terminal.scpt */,
+				BEA20C151F92B13F00DAC9DF /* AppDelegate.swift */,
+				50D1C39D1F94945300920CEC /* MenuViewController.swift */,
+				BEA20C251F92B34400DAC9DF /* PickManager.swift */,
 				BEA20C171F92B13F00DAC9DF /* ViewController.swift */,
 				BEA20C191F92B13F00DAC9DF /* Assets.xcassets */,
 				BEA20C1B1F92B13F00DAC9DF /* Main.storyboard */,
-				BE9A89491F9C844B00379A72 /* www */,
-				BEA20C1E1F92B13F00DAC9DF /* Info.plist */,
-				BEA20C1F1F92B13F00DAC9DF /* Firlib.entitlements */,
-				BEA20C251F92B34400DAC9DF /* PickManager.swift */,
-				50D1C39D1F94945300920CEC /* MenuViewController.swift */,
 			);
 			path = Firlib;
 			sourceTree = "<group>";

@@ -165,37 +165,37 @@ class ViewController: NSViewController {
         }
         
         // Find h5 files in data folder
-        let h5FilesUrl = getH5Files()
+        let h5Files = getH5Files()
         self.h5FileSelector.removeAllItems()
-        if h5FilesUrl.count == 0 { return }
-        for h5FileUrl in h5FilesUrl{
-            let fileName = h5FileUrl.pathComponents.last
-            self.h5FileSelector.addItem(withTitle: fileName!)
+        if h5Files.count == 0 { return }
+        for file in h5Files{
+            self.h5FileSelector.addItem(withTitle: file)
         }
+        
         //Start timer
         updateGuiComponents()
         timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateGuiNow), userInfo: nil, repeats: true)
     }
 
     // Get all h5 files in folder (not _utm.h5)
-    func getH5Files() -> [URL]{
+    func getH5Files() -> [String] {
         let irlibUrl = URL(fileURLWithPath: irlibPath)
         let dataUrl = irlibUrl.appendingPathComponent("data")
         
         let filesUrl = contentsOf(folder: dataUrl)
-        var h5Files: [URL] = []
+        var h5FileNames: [String] = []
         
         // All h5 files, not _utm.h5
         for fileUrl in filesUrl {
-            var pathComponents = fileUrl.pathComponents
+            let pathComponents = fileUrl.pathComponents
             
             // Files ending on h5 but not _utm.h5
             if fileUrl.pathExtension == "h5" &&
-                pathComponents[pathComponents.count - 1].lowercased().range(of:"_utm.h5") == nil {
-                h5Files.append(fileUrl)
+                pathComponents.last?.lowercased().range(of:"_utm.h5") == nil {
+                h5FileNames.append(fileUrl.pathComponents.last!)
             }
         }
-        return h5Files
+        return h5FileNames.sorted()
     }
     
     // Returns all files in folder
