@@ -579,7 +579,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Settings" identifier="" id="Ja7-lf-XSQ">
-                                        <view key="view" id="xlX-5h-chf">
+                                        <view key="view" ambiguous="YES" id="xlX-5h-chf">
                                             <rect key="frame" x="10" y="33" width="118" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -694,7 +694,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Irlib" identifier="" id="Zed-4r-RuI">
-                                        <view key="view" ambiguous="YES" id="dGK-Vc-EOl">
+                                        <view key="view" id="dGK-Vc-EOl">
                                             <rect key="frame" x="10" y="33" width="404" height="287"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>

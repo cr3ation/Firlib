@@ -130,9 +130,12 @@ class ViewController: NSViewController {
     
     
     // Returns the selected pickManager
-    func getCurretPickManager() -> PickManager {
-        let file = h5FileSelector.titleOfSelectedItem
-        let h5FileUrl = URL(fileURLWithPath: irlibPath).appendingPathComponent("data").appendingPathComponent(file!)
+    func getCurretPickManager(fileName: String = "") -> PickManager {
+        var file = fileName
+        if file == "" {
+            file = h5FileSelector.titleOfSelectedItem!
+        }
+        let h5FileUrl = URL(fileURLWithPath: irlibPath).appendingPathComponent("data").appendingPathComponent(file)
         let pickManager = PickManager(h5FileUrl: h5FileUrl, irlibUrl: URL(fileURLWithPath: irlibPath))
         return pickManager
     }
@@ -169,7 +172,9 @@ class ViewController: NSViewController {
         self.h5FileSelector.removeAllItems()
         if h5Files.count == 0 { return }
         for file in h5Files{
+            let pickManager = getCurretPickManager(fileName: file)
             self.h5FileSelector.addItem(withTitle: file)
+            self.h5FileSelector.lastItem?.image = pickManager.statusIcon
         }
         
         //Start timer
@@ -370,6 +375,18 @@ class ViewController: NSViewController {
             self.resultButton.image = self.statusNone
         }
         
+        
+        // File dropdown
+        let selectedIndex = self.h5FileSelector.indexOfSelectedItem
+        let h5Files = getH5Files()
+        self.h5FileSelector.removeAllItems()
+        if h5Files.count == 0 { return }
+        for file in h5Files{
+            let pickManager = getCurretPickManager(fileName: file)
+            self.h5FileSelector.addItem(withTitle: file)
+            self.h5FileSelector.lastItem?.image = pickManager.statusIcon
+        }
+        self.h5FileSelector.selectItem(at: selectedIndex)
         
         //})
     }

@@ -31,6 +31,11 @@ class PickManager {
     var ratedLines: [Int] = []
     var cachedLines: [Int] = []
     
+    // Image that displays the current status.
+    // Gray = no picking file exist. Yellow = picking file exist.
+    // Green = all lines are rated and an iceThicknessFileExists
+    var statusIcon = NSImage(named: NSImage.Name(rawValue: "NSStatusNone"))
+    
     // Generated files
     let h5FileUrl: URL
     private let utmFileUrl: URL
@@ -124,6 +129,7 @@ class PickManager {
         self.cachedLines = getLines(folderUrl: self.cacheFolderUrl, nameFilter: self.prefix + "_utm_line", removeLast: 6)
         
         checkIfFilesExists()
+        updateStatusIcon()
     }
     
     // Helper functions
@@ -139,6 +145,17 @@ class PickManager {
             self.pickedFilesExist = true
         }
         self.offsetFileExists = FileManager.default.fileExists(atPath: self.offsetFileUrl.path)
+    }
+    
+    func updateStatusIcon(){
+        if (self.pickedFilesExist && self.ratedLines.count < self.cachedLines.count) ||
+            (self.pickedFilesExist && self.iceThicknessFileExists == false) {
+            self.statusIcon = NSImage(named: NSImage.Name(rawValue: "NSStatusPartiallyAvailable"))
+        } else if self.ratedLines.count == self.cachedLines.count && self.iceThicknessFileExists {
+            self.statusIcon = NSImage(named: NSImage.Name(rawValue: "NSStatusAvailable"))
+        } else {
+            self.statusIcon = NSImage(named: NSImage.Name(rawValue: "NSStatusNone"))
+        }
     }
     
     // -------------- Call python stuff ------------------
