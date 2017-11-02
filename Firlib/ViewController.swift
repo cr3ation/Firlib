@@ -226,10 +226,10 @@ class ViewController: NSViewController {
     {
         //DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
             //let pickManager = pickManagers[selectedIndex]
-            let pickManager = self.getCurretPickManager()
+            let pm = self.getCurretPickManager()
             
             // Dump metadata
-            if pickManager.dumpmetaFileExists {
+            if pm.dumpmetaFileExists {
                 self.dumpMetaButton.isEnabled = true
                 self.dumpMetaButton.image = self.statusAvailable
             }
@@ -240,7 +240,7 @@ class ViewController: NSViewController {
             }
             
             // Utm coordinates
-            if pickManager.utmFileExists {
+            if pm.utmFileExists {
                 self.utmCoordinatesButton.isEnabled = false
                 self.utmCoordinatesButton.image = self.statusAvailable
                 self.workingOnUtmFile = false
@@ -256,11 +256,11 @@ class ViewController: NSViewController {
             }
             
             // Caches
-            if pickManager.utmFileExists {
-                if pickManager.cacheFilesExist {
+            if pm.utmFileExists {
+                if pm.cacheFilesExist {
                     self.cachesButton.isEnabled = false
                     self.cachesButton.image = self.statusAvailable
-                    let cachedLines = self.getNumberArrayAsString(numbers: pickManager.cachedLines)
+                    let cachedLines = self.getNumberArrayAsString(numbers: pm.cachedLines)
                     self.cachesLabel.stringValue = "Line \(cachedLines)"
                     //self.cachesLabel.stringValue = "\(pickManager.cacheFilesUrls.count) lines"
                     self.workingOnChaces = false
@@ -284,16 +284,16 @@ class ViewController: NSViewController {
             }
             
             // Picked
-            if pickManager.cacheFilesExist {
+            if pm.cacheFilesExist {
                 self.pickedButton.isEnabled = true
-                if pickManager.pickedFilesExist {
-                    if pickManager.cacheFilesUrls.count == pickManager.pickedLines.count {
+                if pm.pickedFilesExist {
+                    if pm.cacheFilesUrls.count == pm.pickedLines.count {
                         self.pickedButton.image = self.statusAvailable
                     }
                     else {
                         self.pickedButton.image = self.statusPartiallyAvailable
                     }
-                    let pickedLines = self.getNumberArrayAsString(numbers: pickManager.pickedLines)
+                    let pickedLines = self.getNumberArrayAsString(numbers: pm.pickedLines)
                     self.pickedLabel.stringValue = "Line \(pickedLines)"
                 }
                 else {
@@ -308,16 +308,16 @@ class ViewController: NSViewController {
             }
             
             // Rated
-            if pickManager.cacheFilesExist {
+            if pm.cacheFilesExist {
                 self.ratedButton.isEnabled = true
-                if pickManager.ratedLines.count > 0 {
-                    if pickManager.cacheFilesUrls.count == pickManager.ratedLines.count {
+                if pm.ratedLines.count > 0 {
+                    if pm.cacheFilesUrls.count == pm.ratedLines.count {
                         self.ratedButton.image = self.statusAvailable
                     }
                     else {
                         self.ratedButton.image = self.statusPartiallyAvailable
                     }
-                    let ratedLines = self.getNumberArrayAsString(numbers: pickManager.ratedLines)
+                    let ratedLines = self.getNumberArrayAsString(numbers: pm.ratedLines)
                     self.ratedLabel.stringValue = "Line \(ratedLines)"
                 }
                 else {
@@ -332,8 +332,8 @@ class ViewController: NSViewController {
             }
             
             // Offsets
-            if pickManager.dumpmetaFileExists {
-                if pickManager.offsetFileExists {
+            if pm.dumpmetaFileExists {
+                if pm.offsetFileExists {
                     self.offsetsButton.isEnabled = true
                     self.offsetsButton.image = self.statusAvailable
                     workingOnOffset = false
@@ -354,8 +354,8 @@ class ViewController: NSViewController {
             }
         
         // Result
-        if pickManager.offsetFileExists {
-            if pickManager.iceThicknessFileExists {
+        if pm.offsetFileExists {
+            if pm.iceThicknessFileExists {
                 self.resultButton.isEnabled = true
                 self.resultButton.image = self.statusAvailable
                 workingOnResult = false
@@ -382,9 +382,23 @@ class ViewController: NSViewController {
         self.h5FileSelector.removeAllItems()
         if h5Files.count == 0 { return }
         for file in h5Files{
-            let pickManager = getCurretPickManager(fileName: file)
+            let pm = getCurretPickManager(fileName: file)
             self.h5FileSelector.addItem(withTitle: file)
-            self.h5FileSelector.lastItem?.image = pickManager.statusIcon
+            self.h5FileSelector.lastItem?.image = pm.statusIcon
+            
+            // Tooltip
+            if pm.cachedLines.count > 0 {
+                let linesPicked = pm.pickedLines.count
+                let linesRated = pm.ratedLines.count
+                let lines = pm.cachedLines.count
+                
+                var pickedPercent : Double = 0
+                var ratedPercent : Double = 0
+                if linesPicked > 0 { pickedPercent = Double(linesPicked) / Double(lines) * 100 }
+                if linesRated > 0 { ratedPercent = Double(linesRated) / Double(lines) * 100 }
+
+                self.h5FileSelector.lastItem?.toolTip = "Lines: \(lines) | Picked: \(Int(pickedPercent))% | Rated: \(Int(ratedPercent))%"
+            }
         }
         self.h5FileSelector.selectItem(at: selectedIndex)
         
